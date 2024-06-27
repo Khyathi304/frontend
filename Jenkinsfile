@@ -26,7 +26,7 @@ pipeline {
         stage('Build'){
             steps{
                 sh """
-                zip -q -r frontend-${appVersion}.zip * -x Jenkinsfile -x frontend-${appVersion}.zip
+                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
                 ls -ltr
                 """
             }
@@ -42,12 +42,12 @@ pipeline {
                         nexusUrl: "${nexusUrl}",
                         groupId: 'com.expense',
                         version: "${appVersion}",
-                        repository: "frontend",
+                        repository: "backend",
                         credentialsId: 'nexus-auth',
                         artifacts: [
-                            [artifactId: "frontend" ,
+                            [artifactId: "backend" ,
                             classifier: '',
-                            file: "frontend-" + "${appVersion}" + '.zip',
+                            file: "backend-" + "${appVersion}" + '.zip',
                             type: 'zip']
                         ]
                     )
@@ -55,17 +55,17 @@ pipeline {
             }
         }
         // stage('Deploy'){
-            // when{
-            //     expression{
-            //         params.deploy
-            //     }
-            // }
+        //     // when{
+        //     //     expression{
+        //     //         params.deploy
+        //     //     }
+        //     // }
         //     steps{
         //         script{
         //             def params = [
         //                 string(name: 'appVersion', value: "${appVersion}")
         //             ]
-        //             build job: 'frontend-deploy', parameters: params, wait: false
+        //             build job: 'backend-deploy', parameters: params, wait: false
         //         }
         //     }
         // }
